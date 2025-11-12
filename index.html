@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bagan Organisasi - Paguyuban Asisten ObGyn ULM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 50px 30px;
+            box-shadow: 0 10px 40px rgba(0, 51, 153, 0.08);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            border-radius: 50px;
+            display: flex;
+            border: 4px solid #0650e4;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(0, 51, 153, 0.15);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        
+        .org-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .org-subtitle {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .chart {
+            position: relative;
+        }
+        
+        .level {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .position-card {
+            background: white;
+            border: 2px solid #e8ecf1;
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            min-width: 180px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .position-card:hover {
+            transform: translateY(-5px);
+            border-color: #003399;
+            box-shadow: 0 12px 30px rgba(0, 51, 153, 0.12);
+        }
+        
+        .position-card.ketua {
+            border-color: #003399;
+            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            color: white;
+            min-width: 200px;
+        }
+        
+        .position-card.ketua .avatar {
+            border-color: white;
+        }
+        
+        .position-card.ketua .role {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #e8ecf1 0%, #d1d8e0 100%);
+            border: 3px solid #003399;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 600;
+            color: #003399;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .ketua .avatar {
+            background: white;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        
+        .name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+        
+        .ketua .name {
+            color: white;
+        }
+        
+        .role {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .divisions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .division {
+            background: white;
+            border: 2px solid #e8ecf1;
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .division:hover {
+            border-color: #003399;
+            box-shadow: 0 8px 25px rgba(0, 51, 153, 0.1);
+        }
+        
+        .division-header {
+            background: linear-gradient(135deg, #003399 0%, #0055cc 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .member {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            min-height: 60px;
+            gap: 16px;
+        }
+        
+        .member:hover {
+            background: #f5f7fa;
+        }
+        
+        .member:last-child {
+            margin-bottom: 0;
+        }
+        
+        .member-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e8ecf1 0%, #d1d8e0 100%);
+            border: 2px solid #003399;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #003399;
+            margin-right: 0;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        
+        .member-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1a1a1a;
+            line-height: 1.4;
+            flex: 1;
+        }
+        
+        .connector {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(180deg, #003399 0%, transparent 100%);
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            .org-title {
+                font-size: 20px;
+            }
+            .org-subtitle {
+                font-size: 13px;
+            }
+            .level {
+                flex-direction: column;
+                align-items: center;
+            }
+            .divisions {
+                grid-template-columns: 1fr;
+            }
+            .position-card {
+                min-width: 160px;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .position-card,
+        .division {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .division:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .division:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .division:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+        
+        .division:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+        
+        .division:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo"><img src="img/pasogin.png" alt="Elfan Winoto"></div>
+            <h1 class="org-title">Paguyuban Asisten Obstetri & Ginekologi</h1>
+            <p class="org-subtitle">
+                Program Pendidikan Dokter Spesialis Obstetri Ginekologi<br> Universitas Lambung Mangkurat - RSUD Ulin Banjarmasin
+            </p>
+        </div>
+
+        <div class="chart">
+            <!-- Ketua -->
+            <div class="level">
+                <div class="position-card ketua">
+                    <div class="avatar"><img src="img/FAN.png" alt="Elfan Winoto"></div>
+                    <div class="name">Elfan Winoto, dr</div>
+                    <div class="role">Ketua</div>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+
+            <!-- Wakil Ketua -->
+            <div class="level">
+                <div class="position-card">
+                    <div class="avatar"><img src="img/ADE.png" alt="Elfan Winoto"></div>
+                    <div class="name">Adek Yeary Wardani, dr</div>
+                    <div class="role">Wakil Ketua</div>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+
+            <!-- Bendahara & Sekretaris -->
+            <div class="level">
+                <div class="position-card">
+                    <div class="avatar"><img src="img/PUT.png" alt="Elfan Winoto"></div>
+                    <div class="name">Putri Indah Permata, dr</div>
+                    <div class="role">Bendahara</div>
+                </div>
+                <div class="position-card">
+                    <div class="avatar"><img src="img/RIC.png" alt="Elfan Winoto"></div>
+                    <div class="name">Richardo Marpaung, dr</div>
+                    <div class="role">Sekretaris</div>
+                </div>
+            </div>
+
+            <!-- Divisi -->
+            <div class="divisions">
+                <!-- Divisi Rohani -->
+                <div class="division">
+                    <div class="division-header">Divisi Rohani</div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/JOM.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Rizko Josua Malau, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/SAR.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Samuel Reynaldo H. Pasaribu, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/HEN.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Hendri Aqmal, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/FAL.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Muhammad Naufal Risyad, dr</div>
+                    </div>
+                </div>
+
+                <!-- Divisi Disiplin -->
+                <div class="division">
+                    <div class="division-header">Divisi Disiplin</div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/DED.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Dede Dwi Putra, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/ENY.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Wenny Rahayu, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/TRU.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Truly Graceva, dr</div>
+                    </div>
+                </div>
+
+                <!-- Divisi Humas IT -->
+                <div class="division">
+                    <div class="division-header">Divisi Humas IT</div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/DIM.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Dhimas Panji Gumelar, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/SON.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Sonya Yohanna R. Rajagukguk, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/AYU.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Irma Ayudiana, dr</div>
+                    </div>
+                </div>
+
+                <!-- Divisi Rumah Tangga -->
+                <div class="division">
+                    <div class="division-header">Divisi Rumah Tangga</div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/TYA.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Restya Meisya, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/LIA.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Amelia Febrianti Buanawati, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/SIS.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Fransiska Lumempouw, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/HAL.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Samuel Halason Sihotang, dr</div>
+                    </div>
+                </div>
+
+                <!-- Divisi Ilmiah -->
+                <div class="division">
+                    <div class="division-header">Divisi Ilmiah</div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/GAR.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Yakob Togar, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/TRI.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Triza Kurniawan, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/NAT.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Sandra Natasha Mahendra, dr</div>
+                    </div>
+                </div>
+
+                <!-- Divisi Olahraga -->
+                <div class="division">
+                    <div class="division-header">Divisi Olahraga</div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/MAW.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Muhammad Adhitya Wicaksono, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/DIT.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Aditya Rahman, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/DES.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Dessy Amalina, dr</div>
+                    </div>
+                    <div class="member">
+                        <div class="avatar"><img src="img/TON.png" alt="Elfan Winoto"></div>
+                        <div class="member-name">Anthony Vando Redzky Purba, dr</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll animation on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.position-card, .division');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Interactive hover effect
+            const members = document.querySelectorAll('.member');
+            members.forEach(member => {
+                member.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            });
+        });
+
+        // Function to update avatar with image (for future use)
+        function updateAvatar(element, imageUrl) {
+            const avatar = element.querySelector('.avatar') || element.querySelector('.member-avatar');
+            if (avatar && imageUrl) {
+                avatar.innerHTML = `<img src="${imageUrl}" alt="Photo" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">`;
+            }
+        }
+
+        // Function to update logo (for future use)
+        function updateLogo(imageUrl) {
+            const logo = document.querySelector('.logo');
+            if (logo && imageUrl) {
+                logo.innerHTML = `<img src="${imageUrl}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">`;
+            }
+        }
+    </script>
+</body>
+
+</html>
